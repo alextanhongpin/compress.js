@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alextanhongpin/compress.js.svg?branch=master)](https://travis-ci.org/alextanhongpin/compress.js)
+
 # compress.js
 A simple JavaScript based client-side image compression algorithm
 
