@@ -11,11 +11,14 @@
 	<input type="file" id='upload' name="" multiple>
 	<script type="text/javascript" src='compress.js'></script>
 	<script type="text/javascript">
-		
+
 		"use strict";
 
 		const Loader = document.getElementById("upload");
-		Loader.addEventListener("change", compress, false);
+		Loader.addEventListener("change", compress(function(data) {
+
+			console.log(data)
+		}), false);
 
 	</script>
 </body>

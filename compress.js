@@ -41,26 +41,53 @@ function toArrayImage(files) {
   // return [...files]
   let f = []
   for (const file of files) {
-    console.log(file)
+
     f.push(file)
   }
   return f;
 }
 
+let pubsub = {
+  _events: {},
+  trigger(action, param) {
+    if (!this._events[action]) return null;
+    const actions = this._events[action];
+    if (actions) {
+      actions.forEach((action) => {
+        action(param)
+      })
+    }
+    return this;
+  },
+  on(action, fn) {
+    if (!this._events[action]) this._events[action] = [];
+    this._events[action].push(fn);
+    return this;
+  }
+}
+
+pubsub.on('start', (param) => {
+  console.log(param)
+})
+pubsub.trigger('start', 'Hello world')
+
+
 window.compress = compress;
 
 
-function compress (evt) {
+function compress (cb) {
+
+  return function (evt) {
+
 	// start with one file first, don't be too adventurous
 	const files = evt.target.files;
 
-	const file = files[0];
+	
 
   // Options
   // excludeRaw? true will improve performance
 
 
-  let d = []
   // parallel
   toArrayImage(files).forEach((file) => {
     let startTime = null;
@@ -69,7 +96,7 @@ function compress (evt) {
     const name = file.name;
     const ext = file.type;
     const size = file.size;
-    console.log('size:', size)
+
     let finalWidth = null;
     let finalHeight = null;
     const minQuality = .65;
@@ -77,7 +104,7 @@ function compress (evt) {
     const targetQuality = 1;
     const targetSize = .5 * 1024 * 1024; // mb
 
-    console.log('targetSze:', targetSize)
+
     const qualityDrop = .05; // the quality will degrade by 0.25 each time
     const minSize = '2mb';
     const quality = 1;
@@ -85,6 +112,7 @@ function compress (evt) {
     let iterations = 0;
     
     startTime = performance.now();
+    let baseStrip = null;
 
     read(file)
     .then(loadImage)
@@ -104,6 +132,11 @@ function compress (evt) {
       **/
       // the first iteration
       iterations = 1;
+
+  const base64str = convertCanvasToBase64(src)
+      const ext = getExtension(base64str);
+      
+      baseStrip = getStrip(ext);
       return loopCompression(src, size, quality, targetSize, targetQuality, iterations); 
     })
     .then((base64) => {
@@ -113,12 +146,13 @@ function compress (evt) {
     .then((data) => {
       endTime = performance.now();
       const difference = endTime - startTime; // in ms
-      console.log('completed')
-      d.push({
+
+      return {
         data: data,
         timeElapsedSeconds: difference / 1000,
         name: name,
         size: size,
+        baseStrip: baseStrip,
         sizeMB: size / (1000 * 1000),
         finalSize: finalSize,
         finalSizeMB: finalSize / (1000 * 1000),
@@ -129,11 +163,11 @@ function compress (evt) {
         height: height,
         sizeReduced: (size - finalSize) / size * 100,
         iterationCount: iterations
-      });
+      }
     }).then((data) => {
       // the sequence won't be respected
       // first come first load
-      console.log(d)
+      cb(data)
     });
   });
 
@@ -177,15 +211,16 @@ function compress (evt) {
 
 
 
-  const endTime = performance.now();
-  const finalSize = 0;
-  const isCompressed = false;
-  //const compressionRatio = (size - finalSize) / size * 100;
-  const raw = null; // original raw image
-  const finalWidth = null;
-  const finalHeight = null;
-  const aspectRatio = null;
+  // const endTime = performance.now();
+  // const finalSize = 0;
+  // const isCompressed = false;
+  // //const compressionRatio = (size - finalSize) / size * 100;
+  // const raw = null; // original raw image
+  // const finalWidth = null;
+  // const finalHeight = null;
+  // const aspectRatio = null;
 
+  }
 }
 
 /*
@@ -206,7 +241,7 @@ function read(file) {
 
 		fileReader.addEventListener('load', function (e) {
       const fileSize = getFileSize(e.target.result);
-      console.log(fileSize)
+
 			resolve(e.target.result);
 		  }, false);
 
@@ -229,7 +264,7 @@ function loadImage(src) {
 		const img = new Image();
 
 		img.addEventListener('load', () => {
-      console.log(' * loadImage')
+
 			// get file name
 			// get file size
 			resolve(img);
@@ -272,7 +307,7 @@ function convertCanvasToImage(canvas) {
   // in order to compress the final image format has to be jpeg
   const base64str = canvas.toDataURL("image/jpeg", quality);
 	image.src = base64str;
-  console.log(getFileSize(base64str))
+
 	return image;
 }
 
@@ -322,7 +357,7 @@ function resize(targetWidth, targetHeight) {
     const height = img.naturalHeight;
     const aspectRatio = width / height;
 
-    console.log("width, hieght", width, height)
+
 
     // can you enlarge the image? no
     if (!targetWidth && !targetHeight) return img;
@@ -332,14 +367,14 @@ function resize(targetWidth, targetHeight) {
     if (outputWidth) {
       // if target width is provided, it will resize based on aspect ratio,
       const scaleWidth = width / outputWidth;
-      console.log('scaleWidth', scaleWidth)
+
       const h = height / scaleWidth;
-      console.log(outputWidth, h);
+
       return { width: outputWidth, height: h }
     } else {
       const scaleHeight = height / outputHeight;
       const w = width / scaleHeight;
-      console.log(scaleWidth, h);
+
       return { width: w, height: outputHeight }
 
     }
@@ -361,7 +396,6 @@ function loopCompression(src, size, quality=1, targetSize, targetQuality=1, iter
   const newSize = getFileSize(base64str);
   // const base64str = convertCanvasToBase64(src)
   // const size = getFileSize(base64str);
-  console.log('looops', size, quality)
   iterations += 1;
   // add in iteration count
 
@@ -394,12 +428,18 @@ var base64len = base64str.replace(/^data:image\/\w+;base64,/, "").length;
   return size;
 }
 
-function getExtension() {
-	var ext = img.split(';')[0].match(/jpeg|png|gif/)[0];
+function getExtension(base64) {
+
+	var ext = base64.split(';')[0].match(/jpeg|png|gif/)[0];
 // strip off the data: url prefix to get just the base64-encoded bytes
-  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  //var data = img.replace(/^data:image\/\w+;base64,/, "");
+  return ext;
 }
 
 function stripData(data) {
   return data.replace(/^data:image\/\w+;base64,/, "");
+}
+
+function getStrip(ext) {
+  return `data:${ext};base64,`
 }

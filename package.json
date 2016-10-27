@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --ui bdd -R spec --recursive --watch",
+    "build": "BABEL_ENV=production babel compress.js -o build/compress.minify.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,14 @@
   "bugs": {
     "url": "https://github.com/alextanhongpin/compress.js/issues"
   },
-  "homepage": "https://github.com/alextanhongpin/compress.js#readme"
+  "homepage": "https://github.com/alextanhongpin/compress.js#readme",
+  "devDependencies": {
+    "babel-preset-babili": "0.0.5",
+    "babel-preset-es2015": "^6.18.0",
+    "babili": "0.0.7",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2"
+  }
 }
+
+
