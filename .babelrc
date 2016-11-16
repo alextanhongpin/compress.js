@@ -5,5 +5,5 @@
       "presets": ["babili"]
     }
   },
-  "plugins": ["transform-es2015-modules-umd", "remove-comments"]
+  "plugins": ["transform-es2015-modules-umd", "remove-comments", "transform-class-properties"]
 }
