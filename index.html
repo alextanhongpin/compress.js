@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>App.js</title>
+	<title>Compress</title>
 </head>
 <body>
 
-<script type="text/javascript" src='dist/app.minify.js'></script>
-<script type="text/javascript">
-	app.default.greet()
-</script>
+	<h1>Compress</h1>
+
+
+	<input type="file" id='upload' name="" multiple>
+	<script type="text/javascript" src='./dist/compress.minify.js'></script>
+	<script type="text/javascript">
+
+		"use strict";
+		const c = new Compress()
+		// c.attach('#upload', {
+		// 	size: 4,
+		// 	quality: .75
+		// }).then((data) => {
+		// 	console.log('uploaded compressed ', data)
+		// })
+
+		const upload = document.getElementById('upload')
+		upload.addEventListener('change', function (evt) {
+			const files = [...evt.target.files]
+			c.compress(files, {
+				size: 4,
+				quality: .75
+			}).then((data) => {
+				console.log(data)
+			})
+		}, false)
+
+	</script>
 </body>
 </html>

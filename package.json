@@ -1,14 +1,14 @@
 {
-  "name": "module-boilerplate",
+  "name": "compress.js",
   "version": "1.0.0",
-  "description": "",
+  "description": "A client side JavaScript image compression library",
   "main": "index.js",
   "scripts": {
     "test": "babel-node ./node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --ui bdd -R spec --recursive --watch",
-    "build": "BABEL_ENV=production babel src -o dist/app.minify.js",
-    "watch": "BABEL_ENV=development babel src -o dist/app.minify.js --watch"
+    "build": "BABEL_ENV=production babel src -o dist/compress.minify.js",
+    "watch": "BABEL_ENV=development babel src -o dist/compress.minify.js --watch"
   },
-  "author": "",
+  "author": "alextanhongpin",
   "license": "ISC",
   "devDependencies": {
     "babel": "^6.5.2",
@@ -26,5 +26,11 @@
   "dependencies": {
     "istanbul": "^0.4.5",
     "mocha": "^3.1.2"
-  }
+  },
+  "keywords": [
+    "javascript",
+    "image",
+    "compression",
+    "base64"
+  ]
 }
