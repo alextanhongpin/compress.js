@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alextanhongpin/compress.js.svg?branch=master)](https://travis-ci.org/alextanhongpin/compress.js)
+
 # compress.js
 A JavaScript client side image compression. This library uses the Canvas API to compress the image, and thus will not work on the node.js server-side.
 
