@@ -7,11 +7,12 @@
 
 	<h1>Compress</h1>
 	<input type="file" id='upload' name="" multiple>
-	<script type="text/javascript" src='./dist/compress.minify.js'></script>
+	<script type="text/javascript" src='./build/compress.js'></script>
 	<script type="text/javascript">
 
 		"use strict";
-		const c = new Compress()
+		console.log(Compress)
+		const c = new compress()
 		// c.attach('#upload', {
 		// 	size: 4,
 		// 	quality: .75
