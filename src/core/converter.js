@@ -1,12 +1,11 @@
-  
-const base64ToFile = (base64) => {
+
+const base64ToFile = (base64, mime = 'image/jpeg') => {
   const byteString = window.atob(base64)
-  const mimestring = 'image/jpeg'
   const content = []
   for (let i = 0; i < byteString.length; i++) {
     content[i] = byteString.charCodeAt(i)
   }
-  return new window.Blob([new Uint8Array(content)], {type: mimestring})
+  return new window.Blob([new Uint8Array(content)], {type: mime})
 }
 
 const imageToCanvas = (width, height) => {
@@ -20,7 +19,7 @@ const imageToCanvas = (width, height) => {
   }
 }
 
-const canvasToBase64 = (canvas, quality=.75) => {
+const canvasToBase64 = (canvas, quality = 0.75) => {
   // in order to compress the final image format has to be jpeg
   const base64 = canvas.toDataURL('image/jpeg', quality)
   return base64
@@ -32,7 +31,6 @@ const canvasToBase64 = (canvas, quality=.75) => {
 //   image.src = base64str
 //   return image
 // }
-
 
 const size = (size) => {
   return {

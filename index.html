@@ -7,13 +7,12 @@
 
 	<h1>Compress</h1>
 	<input type="file" id='upload' name="" multiple>
-	<script type="text/javascript" src='./build/compress.js'></script>
+	<script type="text/javascript" src='./index.js'></script>
 	<script type="text/javascript">
 
 		"use strict";
-		console.log(Compress.default)
-		const c = new Compress.default()
-		// c.attach('#upload', {
+		const compressor = new Compress()
+		// compressor.attach('#upload', {
 		// 	size: 4,
 		// 	quality: .75
 		// }).then((data) => {
@@ -21,13 +20,15 @@
 		// })
 
 		const upload = document.getElementById('upload')
-		upload.addEventListener('change', function (evt) {
+
+		upload.addEventListener('change', function (evt){
 			const files = [...evt.target.files]
-			c.compress(files, {
+			compressor.compress(files, {
 				size: 4,
 				quality: .75
-			}).then((data) => {
-				console.log(data)
+			}).then((results) => {
+				const file = Compress.convertBase64ToFile(results[0].data)
+				console.log(file)
 			})
 		}, false)
 
