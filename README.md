@@ -10,6 +10,17 @@ A JavaScript client side image compression. This library uses the Canvas API to 
 - save data by compressing it on the client-side before sending to the server
 - automatically resize the image to max 1920px (width or height, but mantains the aspect ratio of the images)
 
+### Installation
+```
+npm install compressjs --save
+```
+
+### Import
+
+```
+import Compress from 'compressjs'
+```
+
 
 ### Usage:
 

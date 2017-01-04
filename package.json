@@ -1,5 +1,5 @@
 {
-  "name": "compress.js",
+  "name": "compressjs",
   "version": "1.0.3",
   "description": "A client side JavaScript image compression library",
   "main": "index.js",
