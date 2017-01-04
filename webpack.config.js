@@ -5,7 +5,9 @@ module.exports = {
    entry: './src/Compress.js',
    output: {
        path: path.resolve(__dirname, 'build'),
-       filename: 'compress.js'
+       filename: 'compress.js',
+       library: 'Compress',
+       libraryTarget: 'umd'
    },
    module: {
        loaders: [

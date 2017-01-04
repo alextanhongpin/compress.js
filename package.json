@@ -1,6 +1,6 @@
 {
   "name": "compressjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A client side JavaScript image compression library",
   "main": "index.js",
   "scripts": {
