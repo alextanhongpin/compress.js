@@ -85,11 +85,11 @@ class Compress {
       // add in iteration count
 
       if (newSize > targetSize) {
-        return loopCompression(canvas, newSize, quality - 0.1, targetQuality, targetSize, iterations)
+        return loopCompression(canvas, newSize, quality - 0.1, targetSize, targetQuality, iterations)
       }
 
       if (quality > targetQuality) {
-        return loopCompression(canvas, newSize, quality - 0.1, targetQuality, targetSize, iterations)
+        return loopCompression(canvas, newSize, quality - 0.1, targetSize, targetQuality, iterations)
       }
 
       if (quality < 0.5) {
