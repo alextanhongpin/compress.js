@@ -1,12 +1,12 @@
 {
   "name": "compress.js",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A client side JavaScript image compression library",
   "main": "index.js",
   "scripts": {
     "test": "babel-node ./node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --ui bdd -R spec --recursive --watch",
     "build": "BABEL_ENV=production babel build/compress.js -o build/compress.minify.js",
-    "watch": "BABEL_ENV=development babel src/Compress.js -o dist/compress.js --watch",
+    "watch": "BABEL_ENV=development babel src/compress.js -o dist/compress.js --watch",
     "webpack": "webpack --config webpack.config.js --watch"
   },
   "author": "alextanhongpin",

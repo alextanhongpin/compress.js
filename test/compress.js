@@ -1,6 +1,2 @@
-
-
-describe('it shall load an image', () => {
-
-	it ('shall load an image')
-})
+const compress = require('../build/compress.js')
+console.log(compress)

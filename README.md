@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alextanhongpin/compress.js.svg?branch=master)](https://travis-ci.org/alextanhongpin/compress.js)
+<!-- [![Build Status](https://travis-ci.org/alextanhongpin/compress.js.svg?branch=master)](https://travis-ci.org/alextanhongpin/compress.js) -->
 
 # compress.js
 A JavaScript client side image compression. This library uses the Canvas API to compress the image, and thus will not work on the node.js server-side.
@@ -9,6 +9,17 @@ A JavaScript client side image compression. This library uses the Canvas API to 
 - compress multiple images and convert them to base64 string
 - save data by compressing it on the client-side before sending to the server
 - automatically resize the image to max 1920px (width or height, but mantains the aspect ratio of the images)
+
+### Installation
+```
+npm install compress.js --save
+```
+
+### Import
+
+```
+const Compress = require('compress.js')
+```
 
 
 ### Usage:
@@ -24,24 +35,12 @@ upload.addEventListener('change', function (evt) {
   const files = [...evt.target.files]
   compress.compress(files, {
     size: 4, // the max size in MB, defaults to 2MB
-    quality: .75 // the quality of the image, max is 1
+    quality: .75 // the quality of the image, max is 1,
+    maxWidth: 1920, // the max width of the output image, defaults to 1920px
+    maxHeight: 1920, // the max height of the output image, defaults to 1920px
+    resize: true, // defaults to true, set false if you do not want to resize the image width and height
   }).then((data) => {
     // returns an array of compressed images
-    console.log(data[0])
-    // alt: "10mb-image.jpg"
-    // base64prefix: "data:jpeg;base64,"
-    // data: "/9j/4AAQS...
-    // endHeightInPX: 1280
-    // endWidthInPX: 1920
-    // ext: "image/jpeg"
-    // finalSizeInMB: 0.26388
-    // iterations: 1
-    // quality: 0.75
-    // sizeReducedInPercent: 97.06466480692396
-    // startHeightInPX: 3744
-    // startSizeInMB: 8.989774
-    // startWidthInPX: 5616
-    // timeElapsedInSeconds: 3.2430549999999987
   })
 }, false)
 
@@ -51,6 +50,38 @@ compress.attach('#upload', {
   size: 4,
   quality: .75
 }).then((data) => {
-  console.log('uploaded compressed ', data)
+  // do something with the compressed image
+})
+```
+
+```javascript
+// example output
+[{
+  alt: '10mb-image.jpg',
+  data: '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...',
+  elapsedTimeInSeconds: 1.9292250000000004,
+  endHeightInPx: 1280,
+  endSizeInMb: 0.44418832116788315,
+  endWidthInPx: 1920, 
+  ext: 'image/jpeg',
+  initialHeightInPx: 3744,
+  initialSizeInMb: 8.989774,
+  initialWidthInPx: 5616,
+  iterations: 1,
+  prefix: 'data:jpeg;base64,'
+  quality: 0.75,
+  sizeReducedInPercent: 95.058960089899,
+}]
+```
+
+You can even convert the compressed base64 string to a file before uploading to the server:
+
+```javascript
+compress.attach('#upload', {
+  size: 4,
+  quality: .75
+}).then((results) => {
+  const file = Compress.convertBase64ToFile(results[0].data)
+  // -> Blob {size: 457012, type: "image/jpeg"}
 })
 ```
