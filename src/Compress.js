@@ -46,7 +46,8 @@ class Compress {
         })
         .then((canvas) => {
           photo.iterations = 1
-          photo.base64prefix = Base64.prefix(Base64.mime(Converter.canvasToBase64(canvas)))
+          // Base64.mime(Converter.canvasToBase64(canvas))
+          photo.base64prefix = Base64.prefix(photo.ext)
           return loopCompression(canvas, photo.startSize, photo.quality, photo.size, photo.minQuality, photo.iterations)
         })
         .then((base64) => {

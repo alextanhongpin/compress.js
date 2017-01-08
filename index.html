@@ -8,6 +8,7 @@
 	<h1>Compress</h1>
 	<input type="file" id='upload' name="" multiple>
 	<script type="text/javascript" src='./index.js'></script>
+	<img src="" id='preview'>
 	<script type="text/javascript">
 
 		"use strict";
@@ -21,6 +22,7 @@
 		// })
 
 		const upload = document.getElementById('upload')
+		const preview = document.getElementById('preview')
 
 		upload.addEventListener('change', function (evt){
 			const files = [...evt.target.files]
@@ -29,8 +31,11 @@
 				quality: .75
 			}).then((results) => {
 				console.log(results)
-				const file = Compress.convertBase64ToFile(results[0].data, 'image/png')
+				const output = results[0]
+				const file = Compress.convertBase64ToFile(output.data, output.ext)
 				console.log(file)
+				preview.src = output.prefix + output.data
+
 			})
 		}, false)
 

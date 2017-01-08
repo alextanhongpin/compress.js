@@ -10,6 +10,9 @@ A JavaScript client side image compression. This library uses the Canvas API to 
 - save data by compressing it on the client-side before sending to the server
 - automatically resize the image to max 1920px (width or height, but mantains the aspect ratio of the images)
 
+### NOTE:
+When working with `image/gif`, the compressed image will no longer animate. 
+
 ### Installation
 ```
 npm install compress.js --save
@@ -84,8 +87,10 @@ compress.attach('#upload', {
   // Example mimes:
   // image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/tiff, image/x-icon,  image/svg+xml, image/webp, image/xxx, image/png, image/jpeg, image/webp
   // If mime is not provided, it will default to image/jpeg
-  const mime = 'image/png'
-  const file = Compress.convertBase64ToFile(results[0].data, 'image/png')
+  const img1 = results[0]
+  const base64str = img1.data
+  const imgExt = img1.ext
+  const file = Compress.convertBase64ToFile(base64str, imgExt)
   // -> Blob {size: 457012, type: "image/png"}
 })
 ```
