@@ -11,6 +11,7 @@
 	<script type="text/javascript">
 
 		"use strict";
+
 		const compressor = new Compress()
 		// compressor.attach('#upload', {
 		// 	size: 4,
@@ -27,11 +28,11 @@
 				size: 4,
 				quality: .75
 			}).then((results) => {
-				const file = Compress.convertBase64ToFile(results[0].data)
+				console.log(results)
+				const file = Compress.convertBase64ToFile(results[0].data, 'image/png')
 				console.log(file)
 			})
 		}, false)
-
 
 	</script>
 </body>

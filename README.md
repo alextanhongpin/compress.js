@@ -84,8 +84,8 @@ compress.attach('#upload', {
   // Example mimes:
   // image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/tiff, image/x-icon,  image/svg+xml, image/webp, image/xxx, image/png, image/jpeg, image/webp
   // If mime is not provided, it will default to image/jpeg
-  const mime = 'image/jpeg'
-  const file = Compress.convertBase64ToFile(results[0].data, 'image/jpeg')
-  // -> Blob {size: 457012, type: "image/jpeg"}
+  const mime = 'image/png'
+  const file = Compress.convertBase64ToFile(results[0].data, 'image/png')
+  // -> Blob {size: 457012, type: "image/png"}
 })
 ```
