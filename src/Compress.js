@@ -101,8 +101,8 @@ class Compress {
       return compressFile(file, options)
     }))
   }
-  static convertBase64ToFile (base64) {
-    return Converter.base64ToFile(base64)
+  static convertBase64ToFile (base64, mime) {
+    return Converter.base64ToFile(base64, mime)
   }
 }
 // Supported input formats
