@@ -98,3 +98,6 @@ compress.attach('#upload', {
   // -> Blob {size: 457012, type: "image/png"}
 })
 ```
+
+
+TODO: Add d.ts to support typescript
