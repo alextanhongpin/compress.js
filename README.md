@@ -11,7 +11,11 @@ A JavaScript client side image compression. This library uses the Canvas API to 
 - automatically resize the image to max 1920px (width or height, but mantains the aspect ratio of the images)
 
 ### NOTE:
-When working with `image/gif`, the compressed image will no longer animate. 
+
+There are several limitations for this library:
+- When working with `image/gif`, the compressed image will no longer animate. 
+- When working with `image/png` with transparent background, the compressed image will lose transparency and result in black background.
+
 
 ### Installation
 ```
