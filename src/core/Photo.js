@@ -1,7 +1,7 @@
 // The photo model
 class Photo {
-  constructor ({ quality=0.75, size=2, maxWidth=1920, maxHeight=1920, resize=true }) {
-    this.start = performance.now()
+  constructor ({ quality = 0.75, size = 2, maxWidth = 1920, maxHeight = 1920, resize = true }) {
+    this.start = window.performance.now()
     this.end = null
 
     this.alt = null
@@ -24,6 +24,7 @@ class Photo {
     this.resize = resize
     this.maxWidth = maxWidth
     this.maxHeight = maxHeight
+    this.orientation = 1
   }
 }
 export default Photo

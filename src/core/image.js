@@ -1,7 +1,7 @@
 
 const load = (src) => {
   return new Promise((resolve, reject) => {
-    const img = new Image()
+    const img = new window.Image()
     img.addEventListener('load', () => {
       resolve(img)
     }, false)
@@ -15,11 +15,11 @@ const load = (src) => {
 }
   /*
    * Resize the image based on the given height or width boundary.
-   * Auto resize based on aspect ratio. 
+   * Auto resize based on aspect ratio.
   **/
 const resize = (targetWidth, targetHeight) => {
   return (width, height) => {
-    const aspectRatio = width / height
+    // const aspectRatio = width / height
 
     if (!targetWidth && !targetHeight) return { width, height }
 
@@ -27,13 +27,11 @@ const resize = (targetWidth, targetHeight) => {
     const outputHeight = Math.min(height, targetHeight)
 
     if (outputWidth) {
-      
       const scaleWidth = width / outputWidth
       const h = height / scaleWidth
 
       return { width: outputWidth, height: h }
     } else {
-
       const scaleHeight = height / outputHeight
       const w = width / scaleHeight
 
@@ -41,6 +39,5 @@ const resize = (targetWidth, targetHeight) => {
     }
   }
 }
-
 
 export default { load, resize }

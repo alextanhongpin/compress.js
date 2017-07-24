@@ -14,13 +14,6 @@
 		"use strict";
 
 		const compressor = new Compress()
-		// compressor.attach('#upload', {
-		// 	size: 4,
-		// 	quality: .75
-		// }).then((data) => {
-		// 	console.log('uploaded compressed ', data)
-		// })
-
 		const upload = document.getElementById('upload')
 		const preview = document.getElementById('preview')
 
@@ -35,7 +28,6 @@
 				const file = Compress.convertBase64ToFile(output.data, output.ext)
 				console.log(file)
 				preview.src = output.prefix + output.data
-
 			})
 		}, false)
 

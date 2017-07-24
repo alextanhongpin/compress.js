@@ -1,8 +1,8 @@
 
 const load = (file) => {
   return new Promise((resolve, reject) => {
-    const fileReader = new FileReader()
-    fileReader.addEventListener('load', (evt) =>  {
+    const fileReader = new window.FileReader()
+    fileReader.addEventListener('load', (evt) => {
       resolve(evt.target.result)
     }, false)
 
@@ -14,5 +14,4 @@ const load = (file) => {
   })
 }
 
-
-export default  { load }
+export default { load }

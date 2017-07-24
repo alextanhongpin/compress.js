@@ -9,6 +9,7 @@ A JavaScript client side image compression. This library uses the Canvas API to 
 - compress multiple images and convert them to base64 string
 - save data by compressing it on the client-side before sending to the server
 - automatically resize the image to max 1920px (width or height, but mantains the aspect ratio of the images)
+- fix image rotation issue when uploading images from Android an iOS
 
 ### NOTE:
 

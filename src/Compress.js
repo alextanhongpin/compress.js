@@ -3,6 +3,7 @@ import Converter from './core/converter.js'
 import File from './core/file.js'
 import Image from './core/image.js'
 import Photo from './core/photo.js'
+import Rotate from './core/rotate.js'
 
 class Compress {
   attach (el, options) {
@@ -20,12 +21,17 @@ class Compress {
     function compressFile (file, options) {
       // Create a new photo object
       const photo = new Photo(options)
-      photo.start = performance.now()
+      photo.start = window.performance.now()
       photo.alt = file.name
       photo.ext = file.type
       photo.startSize = file.size
 
-      return File.load(file).then(compressImage(photo))
+      return Rotate.orientation(file)
+      .then((orientation) => {
+        photo.orientation = orientation
+        return File.load(file)
+      })
+      .then(compressImage(photo))
     }
     function compressImage (photo) {
       return (src) => {
@@ -35,14 +41,14 @@ class Compress {
           photo.startHeight = img.naturalHeight
           // Resize the image
           if (photo.resize) {
-            const { width, height } = Image.resize(photo.maxWidth, photo.maxHeight)(img.naturalWidth, img.naturalHeight)
+            const { width, height } = Image.resize(photo.maxWidth, photo.maxHeight)(img.naturalWidth, img.naturalHeight)
             photo.endWidth = width
             photo.endHeight = height
           } else {
             photo.endWidth = img.naturalWidth
             photo.endHeight = img.naturalHeight
           }
-          return Converter.imageToCanvas(photo.endWidth, photo.endHeight)(img)
+          return Converter.imageToCanvas(photo.endWidth, photo.endHeight, photo.orientation)(img)
         })
         .then((canvas) => {
           photo.iterations = 1
@@ -55,7 +61,7 @@ class Compress {
           return Base64.data(base64)
         })
         .then((data) => {
-          photo.end = performance.now()
+          photo.end = window.performance.now()
           const difference = photo.end - photo.start // in ms
 
           return {
@@ -105,6 +111,7 @@ class Compress {
     return Converter.base64ToFile(base64, mime)
   }
 }
+
 // Supported input formats
 // image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/tiff, image/x-icon,  image/svg+xml, image/webp, image/xxx
 // image/png, image/jpeg, image/webp
