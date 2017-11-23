@@ -19,24 +19,22 @@ const load = (src) => {
   **/
 const resize = (targetWidth, targetHeight) => {
   return (width, height) => {
-    // const aspectRatio = width / height
-
     if (!targetWidth && !targetHeight) return { width, height }
 
-    const outputWidth = Math.min(width, targetWidth)
-    const outputHeight = Math.min(height, targetHeight)
+    const originalAspectRatio = width / height
+    const targetAspectRatio = targetWidth / targetHeight
 
-    if (outputWidth) {
-      const scaleWidth = width / outputWidth
-      const h = height / scaleWidth
+    let outputWidth, outputHeight
 
-      return { width: outputWidth, height: h }
+    if (originalAspectRatio > targetAspectRatio) {
+      outputWidth = Math.min(width, targetWidth)
+      outputHeight = outputWidth / originalAspectRatio
     } else {
-      const scaleHeight = height / outputHeight
-      const w = width / scaleHeight
-
-      return { width: w, height: outputHeight }
+      outputHeight = Math.min(height, targetHeight)
+      outputWidth = outputHeight * originalAspectRatio
     }
+
+    return { width: outputWidth, height: outputHeight }
   }
 }
 
