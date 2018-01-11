@@ -104,5 +104,24 @@ compress.attach('#upload', {
 })
 ```
 
+To receive a File or Blob output, you can specify the type of output as well by providing a third argument to compress.attach or compress.compress.
+
+```javascript
+compress.attach('#upload', {
+  size: 4,
+  quality: .75
+}, 'blob').then((results) => {
+  // -> Blob {size: 457012, type: "image/png"}
+})
+```
+
+```javascript
+compress.attach('#upload', {
+  size: 4,
+  quality: .75
+}, 'file').then((results) => {
+  // -> File { name: "YOURIMAGENAME.JPG", lastModified: 1515629470118, lastModifiedDate: Date 2018-01-11T00:11:10.118Z, webkitRelativePath: "", size: 66499, type: "image/jpeg" }
+})
+```
 
 TODO: Add d.ts to support typescript

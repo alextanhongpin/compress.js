@@ -2,22 +2,22 @@ import Base64 from './core/base64.js'
 import Converter from './core/converter.js'
 import File from './core/file.js'
 import Image from './core/image.js'
-import Photo from './core/photo.js'
+import Photo from './core/Photo.js'
 import Rotate from './core/rotate.js'
 
 class Compress {
-  attach (el, options) {
+  attach (el, options, outputType) {
     return new Promise((resolve, reject) => {
       const input = document.querySelector(el)
       input.setAttribute('accept', 'image/*')
       input.addEventListener('change', (evt) => {
-        const output = this.compress([...evt.target.files], options)
+        const output = this.compress([...evt.target.files], options, outputType)
         resolve(output)
       }, false)
     })
   }
 
-  compress (files, options) {
+  compress (files, options, outputType) {
     function compressFile (file, options) {
       // Create a new photo object
       const photo = new Photo(options)
@@ -104,6 +104,18 @@ class Compress {
       return base64str
     }
     return Promise.all(files.map((file) => {
+      if(outputType === 'file'){
+        return compressFile(file, options)
+               .then((file) => {
+                return new window.File([Compress.convertBase64ToFile(file.data, file.ext)], file.alt, {type:file.ext});
+              })
+      }
+      else if(outputType === 'blob'){
+        return compressFile(file, options)
+               .then((file) => {
+                return Compress.convertBase64ToFile(file.data, file.ext);
+              })  
+      }
       return compressFile(file, options)
     }))
   }
@@ -115,4 +127,4 @@ class Compress {
 // Supported input formats
 // image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/tiff, image/x-icon,  image/svg+xml, image/webp, image/xxx
 // image/png, image/jpeg, image/webp
-module.exports = Compress
+export default Compress
