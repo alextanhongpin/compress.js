@@ -14,11 +14,14 @@ A JavaScript client side image compression. This library uses the Canvas API to 
 ### NOTE:
 
 There are several limitations for this library:
-- When working with `image/gif`, the compressed image will no longer animate. 
+- When working with `image/gif`, the compressed image will no longer animate.
 - When working with `image/png` with transparent background, the compressed image will lose transparency and result in black background.
 
 
 ### Installation
+
+NPM Package [here](https://www.npmjs.com/package/compress.js).
+
 ```
 npm install compress.js --save
 ```
@@ -32,7 +35,7 @@ const Compress = require('compress.js')
 
 ### Demo
 
-Try out our demo [here](https://compressjs.herokuapp.com/).
+Try out our demo [here](https://practical-easley-4e78c7.netlify.app/).
 
 ### Usage
 
@@ -75,7 +78,7 @@ compress.attach('#upload', {
   elapsedTimeInSeconds: 1.9292250000000004,
   endHeightInPx: 1280,
   endSizeInMb: 0.44418832116788315,
-  endWidthInPx: 1920, 
+  endWidthInPx: 1920,
   ext: 'image/jpeg',
   initialHeightInPx: 3744,
   initialSizeInMb: 8.989774,
@@ -108,7 +111,7 @@ compress.attach('#upload', {
 
 ## Rotation
 
-To enable rotation, pass the `rotate` options in the config. 
+To enable rotation, pass the `rotate` options in the config.
 ```js
 const browserSupportsExifOrientation = () => {
   return new Promise((resolve) => Modernizr.on("exiforientation", resolve));
