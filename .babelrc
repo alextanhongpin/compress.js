@@ -1,9 +1,0 @@
-{
-  "presets": ["es2015", "stage-3"],
-  "env": {
-    "production": {
-      "presets": ["babili"]
-    }
-  },
-  "plugins": ["transform-es2015-modules-umd", "remove-comments", "transform-class-properties"]
-}

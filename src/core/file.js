@@ -1,17 +1,16 @@
-
 const load = (file) => {
   return new Promise((resolve, reject) => {
-    const fileReader = new window.FileReader()
-    fileReader.addEventListener('load', (evt) => {
-      resolve(evt.target.result)
-    }, false)
+    const fileReader = new window.FileReader();
+    fileReader.addEventListener(
+      "load",
+      (evt) => resolve(evt.target.result),
+      false
+    );
 
-    fileReader.addEventListener('error', (err) => {
-      reject(err)
-    }, false)
+    fileReader.addEventListener("error", reject, false);
 
-    fileReader.readAsDataURL(file)
-  })
-}
+    fileReader.readAsDataURL(file);
+  });
+};
 
-export default { load }
+export default { load };
