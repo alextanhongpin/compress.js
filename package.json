@@ -27,5 +27,9 @@
   ],
   "dependencies": {
     "regenerator-runtime": "^0.13.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alextanhongpin/compress.js.git"
   }
 }
