@@ -51,6 +51,7 @@ upload.addEventListener('change', function (evt) {
     maxWidth: 1920, // the max width of the output image, defaults to 1920px
     maxHeight: 1920, // the max height of the output image, defaults to 1920px
     resize: true, // defaults to true, set false if you do not want to resize the image width and height
+    rotate: false, // See the rotation section below
   }).then((data) => {
     // returns an array of compressed images
   })
@@ -105,4 +106,25 @@ compress.attach('#upload', {
 ```
 
 
-TODO: Add d.ts to support typescript
+## Rotation
+
+To enable rotation, pass the `rotate` options in the config. 
+```js
+const browserSupportsExifOrientation = () => {
+  return new Promise((resolve) => Modernizr.on("exiforientation", resolve));
+};
+
+// Only rotate if browser does not support exit orientation.
+const shouldRotate = async () => {
+  const supported = await browserSupportsExifOrientation();
+  return !supported;
+};
+
+const rotate = await shouldRotate();
+
+// When compressing ...
+compress.compress(files, {
+    ...
+    rotate, // Pass the rotation here
+  })
+```
