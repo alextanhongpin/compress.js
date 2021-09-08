@@ -111,8 +111,10 @@ compress.attach('#upload', {
 
 ## Rotation
 
-To enable rotation, pass the `rotate` options in the config.
+To enable auto-rotation based on browsers support for [exif-orientation](https://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/), pass the `rotate` options in the config.
+
 ```js
+// Use Modernizr to detect if exit-orientation is supported.
 const browserSupportsExifOrientation = () => {
   return new Promise((resolve) => Modernizr.on("exiforientation", resolve));
 };
