@@ -3,7 +3,7 @@
   "version": "1.2.1",
   "description": "A client side JavaScript image compression library",
   "main": "src/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "webpack --watch",
     "build": "webpack"
