@@ -3,6 +3,13 @@
 # compress.js
 A JavaScript client side image compression. This library uses the Canvas API to compress the image, and thus will not work on the node.js server-side.
 
+## Support me
+
+Maintaining open source is not easy. Would be great if you could show some support!
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/alextan2205)
+
+
 ### Advantage:
 
 - quick compression on the client-side
