@@ -1,0 +1,63 @@
+<input type="file" accept="image/*" id="file" />
+
+<p>
+  <label for="maxWidth">Max Width </label>
+  <input type="number" id="maxWidth" value="320" />
+</p>
+
+<p>
+  <label for="maxHeight">Max Height</label>
+  <input type="number" id="maxHeight" value="0" />
+</p>
+
+<p>
+  <label for="cropped"> Crop </label>
+  <input type="checkbox" id="cropped" checked />
+</p>
+<img id="original" />
+<img id="output" />
+
+<button id="submit">Process</button>
+<script type="module">
+  import Compress from "./build/index.js";
+  const original = document.getElementById("original");
+  const output = document.getElementById("output");
+  const isCrop = document.getElementById("cropped");
+  const maxWidth = document.getElementById("maxWidth");
+  const maxHeight = document.getElementById("maxHeight");
+  const submit = document.getElementById("submit");
+
+  let state = {};
+  submit.addEventListener("click", () => {
+    run();
+  });
+
+  const file = document.getElementById("file");
+  file.addEventListener(
+    "change",
+    async (evt) => {
+      const file = evt.target.files?.[0];
+      if (!file) return;
+      state.file = file;
+      run();
+    },
+    false
+  );
+
+  async function run() {
+    const file = state.file;
+    original.src = URL.createObjectURL(file);
+
+    const compress = new Compress({
+      maxWidth: maxWidth.valueAsNumber,
+      maxHeight: maxHeight.valueAsNumber,
+      crop: isCrop.checked,
+    });
+    try {
+      const newFile = await compress.compress(file);
+      output.src = URL.createObjectURL(newFile);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>

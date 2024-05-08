@@ -1,36 +1,67 @@
 "use strict";
 
+import Compress from "./compress.min.js";
+
 window.onload = (async function () {
-  const compressor = new window.Compress();
-  const browserSupportsExifOrientation = () => {
-    return new Promise((resolve) => Modernizr.on("exiforientation", resolve));
-  };
+  const compressor = new Compress();
 
-  // Only rotate if browser does not support exit orientation.
-  const shouldRotate = async () => {
-    const supported = await browserSupportsExifOrientation();
-    return !supported;
-  };
-  const rotate = await shouldRotate();
-  console.log({ rotate });
-
+  const crop = document.getElementById("crop");
+  const maxWidth = document.getElementById("maxWidth");
+  const maxHeight = document.getElementById("maxHeight");
   const upload = document.getElementById("upload");
-  const preview = document.getElementById("preview");
+  const before = document.getElementById("before");
+  const after = document.getElementById("after");
+  const beforeOutput = document.getElementById("before-output");
+  const afterOutput = document.getElementById("after-output");
+
+  maxWidth.addEventListener("change", render, false);
+  maxHeight.addEventListener("change", render, false);
+  crop.addEventListener("change", render, false);
+
+  const byteValueNumberFormatter = Intl.NumberFormat("en", {
+    notation: "compact",
+    style: "unit",
+    unit: "byte",
+    unitDisplay: "narrow",
+  });
+
+  let state = {};
   upload.addEventListener(
     "change",
     async function (evt) {
-      const files = [...evt.target.files];
-      const results = await compressor.compress(files, {
-        size: 4,
-        quality: 0.75,
-        rotate,
-      });
-      console.log(results);
-      const output = results[0];
-      const file = Compress.convertBase64ToFile(output.data, output.ext);
-      console.log(file);
-      preview.src = output.prefix + output.data;
+      state.file = evt.target.files[0];
+      render();
     },
     false
   );
+
+  async function render() {
+    const file = state.file;
+    before.src = URL.createObjectURL(file);
+    before.onload = function () {
+      beforeOutput.innerText = `Name: ${file.name}
+Size: ${byteValueNumberFormatter.format(file.size)}
+Type: ${file.type}
+Last Modified: ${new Date(file.lastModified).toLocaleString()}
+Shape: ${before.naturalWidth}x${before.naturalHeight}px`;
+    };
+
+    const newFile = await compressor.compress(file, {
+      quality: 0.95,
+      crop: crop.checked,
+      maxWidth: maxWidth.valueAsNumber,
+      maxHeight: maxHeight.valueAsNumber,
+    });
+
+    console.log({ newFile });
+
+    after.src = URL.createObjectURL(newFile);
+    after.onload = function () {
+      afterOutput.innerText = `Name: ${newFile.name}
+Size: ${byteValueNumberFormatter.format(newFile.size)}
+Type: ${newFile.type}
+Last Modified: ${new Date(newFile.lastModified).toLocaleString()}
+Shape: ${after.naturalWidth}x${after.naturalHeight}px`;
+    };
+  }
 })();

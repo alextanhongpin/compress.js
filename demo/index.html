@@ -7,13 +7,8 @@
         font-family: Helvetica, Arial;
       }
       .container {
-        max-width: 640px;
         width: 100%;
         margin: auto;
-      }
-      #preview {
-        width: 100%;
-        height: auto;
       }
     </style>
   </head>
@@ -28,25 +23,52 @@
         <a href="https://www.npmjs.com/package/compress.js">here</a>.
       </p>
 
-      <script src="https://gist.github.com/alextanhongpin/0f4ca5d0098a3410e0960b3ee2420bbb.js"></script>
+      <p>or</p>
+
+      <p>
+        Copy the minified version from
+        <a
+          href="https://github.com/alextanhongpin/compress.js/blob/master/build/compress.min.js"
+          >here</a
+        >
+        and add it to your project directory.
+      </p>
+
+      <img src="./carbon.png" width="800px" />
 
       <h3>Demo</h3>
 
       <p>Upload an image and watch the file size before and after.</p>
 
       <div>
-        <input type="file" name="" id="upload" accept="image/*" multiple />
+        <input type="file" name="" id="upload" accept="image/*" />
       </div>
       <div>
-        <img src="" alt="" id="preview" />
+        <p>
+          <label for="maxWidth">Max Width </label>
+          <input type="number" id="maxWidth" value="320" />
+        </p>
 
-        <p id="output"></p>
+        <p>
+          <label for="maxHeight">Max Height</label>
+          <input type="number" id="maxHeight" value="0" />
+        </p>
+
+        <p>
+          <label for="crop"> Crop </label>
+          <input type="checkbox" id="crop" checked />
+        </p>
+      </div>
+      <div>
+        <img src="" alt="" id="before" />
+        <p id="before-output"></p>
+
+        <img src="" alt="" id="after" />
+        <p id="after-output"></p>
       </div>
     </div>
 
     <!--Include a custom modernizr that only checks the exif-orientation.-->
-    <script type="text/javascript" src="./modernizr.js"></script>
-    <script type="text/javascript" src="./compress.js"></script>
-    <script type="text/javascript" src="./index.js"></script>
+    <script src="./index.js" type="module"></script>
   </body>
 </html>

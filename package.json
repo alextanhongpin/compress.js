@@ -1,33 +1,27 @@
 {
   "name": "compress.js",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "A client side JavaScript image compression library",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "webpack --watch",
-    "build": "webpack"
+    "dev": "bun build src/index.js --outfile=build/compress.min.js --minify --watch",
+    "build": "bun build src/index.js --outfile=build/compress.min.js --minify",
+    "build-demo": "bun build src/index.js --outfile=demo/compress.min.js --minify"
   },
   "author": "alextanhongpin",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
-    "babel-loader": "^8.2.3",
-    "eslint": "^8.6.0",
-    "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1"
+    "@types/bun": "latest",
+    "eslint": "^8.57.0"
   },
   "keywords": [
     "javascript",
     "image",
     "compression",
-    "base64"
+    "base64",
+    "bunjs"
   ],
-  "dependencies": {
-    "regenerator-runtime": "^0.13.9"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alextanhongpin/compress.js.git"
