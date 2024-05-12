@@ -1,4 +1,9 @@
-import "./lib/modernizr.js";
+try {
+  // Handle window/document not found in nodejs.
+  await import("./lib/modernizr.js");
+} catch {
+  globalThis.Modernizr = { exiforientation: false };
+}
 
 // https://stackoverflow.com/questions/20600800/js-client-side-exif-orientation-rotate-and-mirror-jpeg-images/31273162#31273162
 export async function rotate(file, { quality = 1.0 } = {}) {
@@ -7,7 +12,7 @@ export async function rotate(file, { quality = 1.0 } = {}) {
 
   const orientation = await getOrientation(file);
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const img = new Image();
     img.onload = async function () {
       const width = img.naturalWidth;
@@ -90,7 +95,7 @@ export async function rotate(file, { quality = 1.0 } = {}) {
 
 function getOrientation(file) {
   return new Promise((resolve) => {
-    const reader = new window.FileReader();
+    const reader = new FileReader();
 
     reader.onload = function (event) {
       var view = new DataView(event.target.result);
