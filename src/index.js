@@ -3,11 +3,18 @@ import { crop } from "./crop.js";
 import { compress } from "./compress.js";
 
 export default class Compress {
-  constructor({ maxWidth, maxHeight, quality = 0.95, crop = false } = {}) {
+  constructor({
+    maxWidth,
+    maxHeight,
+    quality = 0.95,
+    crop = false,
+    aspectRatio = "1:1",
+  } = {}) {
     this.maxWidth = maxWidth;
     this.maxHeight = maxHeight;
     this.quality = quality;
     this.crop = crop;
+    this.aspectRatio = aspectRatio;
   }
 
   async compress(file, options) {
@@ -16,6 +23,7 @@ export default class Compress {
       maxHeight: this.maxHeight,
       quality: this.quality,
       crop: this.crop,
+      aspectRatio: this.aspectRatio,
       ...options,
     };
     const steps = [rotate];

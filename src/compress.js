@@ -35,11 +35,7 @@ export function compress(
             lastModified: Date.now(),
           });
 
-          if (newFile.size > file.size) {
-            reject("Compression failed");
-          } else {
-            resolve(newFile);
-          }
+          resolve(newFile);
         },
         file.type,
         quality

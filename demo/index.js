@@ -8,6 +8,7 @@ window.onload = (async function () {
   const crop = document.getElementById("crop");
   const maxWidth = document.getElementById("maxWidth");
   const maxHeight = document.getElementById("maxHeight");
+  const aspectRatio = document.getElementById("aspectRatio");
   const upload = document.getElementById("upload");
   const before = document.getElementById("before");
   const after = document.getElementById("after");
@@ -17,6 +18,7 @@ window.onload = (async function () {
   maxWidth.addEventListener("change", render, false);
   maxHeight.addEventListener("change", render, false);
   crop.addEventListener("change", render, false);
+  aspectRatio.addEventListener("change", render, false);
 
   const byteValueNumberFormatter = Intl.NumberFormat("en", {
     notation: "compact",
@@ -39,29 +41,45 @@ window.onload = (async function () {
     const file = state.file;
     before.src = URL.createObjectURL(file);
     before.onload = function () {
+      const r = gcd(before.naturalWidth, before.naturalHeight);
       beforeOutput.innerText = `Name: ${file.name}
 Size: ${byteValueNumberFormatter.format(file.size)}
 Type: ${file.type}
 Last Modified: ${new Date(file.lastModified).toLocaleString()}
-Shape: ${before.naturalWidth}x${before.naturalHeight}px`;
+Shape: ${before.naturalWidth}x${before.naturalHeight}px
+Aspect Ratio: ${before.naturalWidth / r}:${before.naturalHeight / r}`;
     };
 
+    console.log("render", {
+      quality: 0.95,
+      crop: crop.checked,
+      maxWidth: maxWidth.valueAsNumber,
+      maxHeight: maxHeight.valueAsNumber,
+      aspectRatio: aspectRatio.value,
+    });
     const newFile = await compressor.compress(file, {
       quality: 0.95,
       crop: crop.checked,
       maxWidth: maxWidth.valueAsNumber,
       maxHeight: maxHeight.valueAsNumber,
+      aspectRatio: aspectRatio.value,
     });
 
     console.log({ newFile });
 
     after.src = URL.createObjectURL(newFile);
     after.onload = function () {
+      const r = gcd(after.naturalWidth, after.naturalHeight);
       afterOutput.innerText = `Name: ${newFile.name}
 Size: ${byteValueNumberFormatter.format(newFile.size)}
 Type: ${newFile.type}
 Last Modified: ${new Date(newFile.lastModified).toLocaleString()}
-Shape: ${after.naturalWidth}x${after.naturalHeight}px`;
+Shape: ${after.naturalWidth}x${after.naturalHeight}px
+Aspect Ratio: ${after.naturalWidth / r}:${after.naturalHeight / r}`;
     };
+  }
+
+  function gcd(a, b) {
+    return b == 0 ? a : gcd(b, a % b);
   }
 })();

@@ -1,12 +1,12 @@
 {
   "name": "compress.js",
-  "version": "2.0.2",
+  "version": "2.1.2",
   "description": "A client side JavaScript image compression library",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
     "dev": "bun build src/index.js --outfile=build/compress.min.js --minify --watch",
-    "build": "bun build src/index.js --outfile=build/compress.min.js --minify",
+    "build": "bun build src/index.js --outfile=build/compress.min.js --minify && npm run build-demo",
     "build-demo": "bun build src/index.js --outfile=demo/compress.min.js --minify"
   },
   "author": "alextanhongpin",

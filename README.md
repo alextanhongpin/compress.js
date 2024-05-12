@@ -17,6 +17,7 @@ Maintaining open source is not easy. Would be great if you could show some suppo
 - mantains the aspect ratio of the images when resizing
 - fix image rotation issue when uploading images from Android an iOS
 - supports cropping the image
+- **New**: supports cropping to desired aspect ratio, e.g. 1:1, 4:3 etc
 
 ### NOTE:
 
