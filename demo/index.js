@@ -1,6 +1,7 @@
 "use strict";
 
-import Compress from "./compress.min.js";
+//import Compress from "./compress.min.js";
+import Compress from "https://cdn.jsdelivr.net/npm/compress.js@2.1.2/build/compress.min.js";
 
 window.onload = (async function () {
   const compressor = new Compress();

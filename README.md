@@ -34,6 +34,30 @@ NPM Package [here](https://www.npmjs.com/package/compress.js).
 npm install compress.js --save
 ```
 
+### CDN
+
+Using jsDelivr CDN:
+
+
+> [!IMPORTANT]
+> The script tag must include `type="module" to work.`
+
+```html
+<!-- index.js is your file that needs to execute compress.js-->
+<script src="./index.js" type="module"></script>
+```
+
+And in your `index.js`, you can import the desired version:
+
+```js
+// index.js
+"use strict";
+
+import Compress from "https://cdn.jsdelivr.net/npm/compress.js@2.1.2/build/compress.min.js";
+
+const compressor = new Compress();
+```
+
 ### Import
 
 ```
